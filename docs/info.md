@@ -19,66 +19,35 @@ The circuit has 10 inputs:
 
 | Input    | Setting                     |
 | -------- | -------                     |
-| CLK      | Clock                       |
+| CLK      | Not Used                       |
 | RST_N    | Not Used                    |
-| 01       | Not Used                    |
-| 02       | Manual R0 Input Value       |
-| 03       | Input Select                |
-| 04       | Not Used                    |
+| 01       | en1                    |
+| 02       | en2       |
+| 03       | en3               |
+| 04       | en4                    |
 | 05       | Not Used                    |
 | 06       | Not Used                    |
 | 07       | Not Used                    |
 | 08       | Not Used                    |
 
-The CLK sets the clocking for the flip-flop registers for latching the LFSR values. In the schematic shown in the Wokwi project, a switch is used to select either the system clock or an externally provided or manual clock that allows the user to manually step through each latching event.
+todas las entradas son referencias que funcionan como un sistema binario para verificar el funcionamiento de los 7 segmentos. 
 
-An 8-input DIP switch provides some flexibility to initalizing the LFSR. DIP03 (IN2) allows the user to toggle the Input Select function, which is a multiplexer that select whether the left-most register (R1) takes in as the input the LFSR feedback output (i.e., (R1 = R32 ^ R30 & R26 ^ R25) or a value that is manually selected by the user.
-
-DIP02 (IN1) allows a the user to manually enter a 0 or a 1 value into the leftmost register.
-
-The cicuit has 8 outputs. They output the values of the 8 right-most registers (R25, R26, R27, R28, R29, R30, R31, R32).
-
-| Output   | Value in    |
+| Output   | Value io para dein    |
 | -------- | -------     |
-| 01       | R25 |
-| 02       | R26 |
-| 03       | R27 |
-| 04       | R28 |
-| 05       | R29 |
-| 06       | R30 |
-| 07       | R31 |
-| 08       | R32 |
+| 01       | s0 |
+| 02       | s1 |
+| 03       | s2 |
+| 04       | s3 |
+| 05       | s4 |
+| 06       | s5 |
+| 07       | s6 |
+| 08       | Not Used |
 
 ## How to test
 
-The circuit can be tested by powering on the circuit, and first setting the Input Select switch (DIP03) to "1" to reset/initialize the entire LFSR to all-zeros. The Input Select switch can then be switched to "0" to allow the LFSR to run from its all-zero initialized value. The first 100 8-bit output values of the LFSR from this zeroized state may be observed using a logic analyzer, and should be:
+Las saidas son la recepacion de los bits, envia dos por las entradas que se puede visualizar el el display de 7 segmentos. 
 
-[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],
-[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],
-[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],
-[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],
-[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],
-[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],
-[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[1 0 0 0 0 0 0 0],[0 1 0 0 0 0 0 0],
-[0 0 1 0 0 0 0 0],[0 0 0 1 0 0 0 0],[0 0 0 0 1 0 0 0],[0 0 0 0 0 1 0 0],
-[0 0 0 0 0 0 1 0],[0 0 0 0 0 0 0 1],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],
-[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],
-[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],
-[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],
-[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[1 0 0 0 0 0 0 0],
-[1 1 0 0 0 0 0 0],[0 1 1 0 0 0 0 0],[0 0 1 1 0 0 0 0],[0 0 0 1 1 0 0 0],
-[1 0 0 0 1 1 0 0],[0 1 0 0 0 1 1 0],[1 0 1 0 0 0 1 1],[0 1 0 1 0 0 0 1],
-[0 0 1 0 1 0 0 0],[0 0 0 1 0 1 0 0],[0 0 0 0 1 0 1 0],[0 0 0 0 0 1 0 1],
-[0 0 0 0 0 0 1 0],[0 0 0 0 0 0 0 1],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],
-[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],
-[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],
-[1 0 0 0 0 0 0 0],[0 1 0 0 0 0 0 0],[1 0 1 0 0 0 0 0],[0 1 0 1 0 0 0 0],
-[0 0 1 0 1 0 0 0],[0 0 0 1 0 1 0 0],[0 0 0 0 1 0 1 0],[0 0 0 0 0 1 0 1],
-[0 0 0 0 0 0 1 0],[0 0 0 0 0 0 0 1],[1 0 0 0 0 0 0 0],[0 1 0 0 0 0 0 0],
-[0 0 1 0 0 0 0 0],[0 0 0 1 0 0 0 0],[1 0 0 0 1 0 0 0],[0 1 0 0 0 1 0 0],
-[0 0 1 0 0 0 1 0],[0 0 0 1 0 0 0 1],[0 0 0 0 1 0 0 0],[0 0 0 0 0 1 0 0],
-[0 0 0 0 0 0 1 0],[0 0 0 0 0 0 0 1],[0 0 0 0 0 0 0 0],[0 0 0 0 0 0 0 0],
-[0 0 0 0 0 0 0 0],[1 0 0 0 0 0 0 0]
+
 
 A python implementation of the 32-bit Fibonacci LFSR can be found at the link below. It may be used for testing the hardware for sequences longer than the initial 100 values.
 
