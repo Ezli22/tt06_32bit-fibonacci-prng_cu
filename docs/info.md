@@ -9,11 +9,11 @@ You can also include images in this folder and reference them in the markdown. E
 
 ## How it works
 
-The project is a hardware implementation of a maximum-cycle 32-bit Fibonacci linear feedback shift register (LFSR) with taps at registers (R32, R30, R26, R25). The LFSR is defined with the least-significant bit (LSB) at the left-most register R1 and the most-significant bit (MSB) at the right-most register R32. The LFSR shifts bits from left to right (R_n -> R_n+1), with the LSB populated by XORing bits from the tapped registers (R1 = R32 ^ R30 & R26 ^ R25). The LFSR contains an initialization/fail-safe feedback that prevents the LFSR from entering an all-zero state. If the LFSR is ever in an all-zero state, a "1" value is inserted into R1.
+probador de 7 segmentos
 
 A schematic of the circuit may be found at:
 
-https://wokwi.com/projects/394704587372210177
+https://wokwi.com/projects/395347427728226305
 
 The circuit has 10 inputs:
 
